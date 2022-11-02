@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "aws-lambda-python-cdk"
+version = "0.1.0"
+description = ""
+authors = ["walmsles <2704782+walmsles@users.noreply.github.com>"]
+readme = "README.md"
+packages = [
+    {include = "services"},
+    {include = "cdk"},
+    {include = "tests"}
+]
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[tool.poetry.group.dev.dependencies]
+aws-cdk-lib = "^2.49.0"
+constructs = "^10.1.144"
+boto3 = "^1.25.4"
+isort = "^5.10.1"
+black = "^22.10.0"
+flake8 = "^5.0.4"
+pytest = "^7.2.0"
+pytest-cov = "^4.0.0"
+aws-cdk-aws-lambda-python-alpha = "^2.49.0a0"
+mypy = "^0.982"
+mypy-boto3-s3 = "^1.26.0.post1"
+mypy-boto3 = "^1.26.0.post1"
+boto3-stubs = "^1.26.0.post1"
+
+
+[tool.poetry.group.event_api.dependencies]
+aws-lambda-powertools = "^2.0.0"
+
+[tool.poetry.group.router.dependencies]
+
+[tool.isort]
+profile = "black"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
