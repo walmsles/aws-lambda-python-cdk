@@ -3,11 +3,10 @@ from http import HTTPStatus
 from typing import Any, Dict
 
 import aws_lambda_powertools.event_handler.content_types as content_types
+from adapters.event import EventService
 from aws_lambda_powertools.event_handler import APIGatewayRestResolver, Response
 from aws_lambda_powertools.event_handler.exceptions import InternalServerError
 from aws_lambda_powertools.logging import Logger
-
-from .event import EventService
 
 app = APIGatewayRestResolver()
 logger = Logger()

@@ -7,7 +7,7 @@ from aws_cdk.aws_apigateway import LambdaIntegration, RestApi
 from aws_cdk.aws_lambda import Architecture, Runtime, Tracing
 from aws_cdk.aws_lambda_python_alpha import PythonFunction
 from aws_cdk.aws_s3 import BlockPublicAccess, Bucket, BucketEncryption, LifecycleRule
-from aws_cdk.aws_sqs import Queue, QueueEncryption
+from aws_cdk.aws_sqs import Queue
 from constructs import Construct
 
 
@@ -59,9 +59,6 @@ class EventApiConstruct(Construct):
                 lifecycle_rules=life_cycles,
             )
 
-        if queue is None:
-            queue = Queue(self, "eventQueue", encryption=QueueEncryption.KMS_MANAGED)
-
         function = PythonFunction(
             self,
             "LambdaFunction",
@@ -83,3 +80,6 @@ class EventApiConstruct(Construct):
 
         # Grant bucket read/write
         bucket.grant_read_write(function)
+
+        self.bucket = bucket
+        self.queue = queue

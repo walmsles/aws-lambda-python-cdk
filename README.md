@@ -1,6 +1,6 @@
 # Deploying Python code to AWS Lambda with CDK
 
-Deploying Python code to AWS Lambda using the AWS CDK is confusing especially when there are so many different methods being put forward as **Best Practice**.  I honestly feel right now the true AWS Serverless *Best Practice* is yet to fully emerge so tread carefully and make the right choice that works for your situation and meets your needs.  I have put this project example together for my own use and to use as a basis for Serverless teams that I assist and accelerate in my day to day work life.
+Deploying Python code to AWS Lambda using the AWS CDK is confusing especially when there are so many different methods and options available.  I honestly feel right now the true AWS Serverless *Best Practice* is yet to fully emerge so I tend to tread carefully and make the choices that work for my teams and projects.  I also tend to move slowly with adopting the next BIG thing and make sure I play with and understand the choices I am making.  So I have put this project example together for my own use and to use as a basis for Serverless teams that I assist and accelerate in my day to day work life, it has the things that I like and prefer to use and understand.
 
 There are a few considerations when building out a sane project directory structure for a Serverless Service built around AWS Lambda packaged and deployed using the AWS CDK.
 
@@ -13,11 +13,14 @@ There are a few considerations when building out a sane project directory struct
 3. Lambda functions must only include the dependencies they directly use so that lambda function sizes are kept to a minimum to ease cold start time pressure.
 4. CDK infrastructure for Lambda service components must be co-located with the lambda function to ease refactoring and ensure related service elements are kept together in a single unit
 5. CDK Infrastructure for each service component must be implemented as a CDK Construct and not a stack.  This will enable faster refactoring and enable flexible stack creation and re-use in real cloud testing.
-
+6. CDK Constructs should reference real folders and the "cdk deploy" should be the thing that does all the work of packaging and deploying so there are no hidden steps.
+7. Sometimes 6 is not always achievable and I have added some "magic" in the requirements.txt creation which is explained further down in the README around my use of poetry for dependency management.
 
 ## Hexagonal Architecture
 
 There has been a lot of talk about [Hexagonal Architectures](https://alistair.cockburn.us/hexagonal-architecture/) in the AWS Serverless wold this year and I have written some articles on this topic which you can find on [my blog](https://blog.walmsles.io).  In this repo I use the Dependency Inversion principle in building out Ports and Adapters to create loosely coupled classes for accesing AWS Cloud resources.  This helps in reducing the need for mocking AWS SDK calls in order to test the Microservice code you are writing which is often hard or problematic for developers new to AWS Serverless.
+
+I am using this repo to also explore this concept within this repo and the ideas presented will change and grow as I mature my understanding through building.
 
 ## Where to Start?
 
@@ -25,7 +28,7 @@ I have based this project structure on the AWS Sample repo [aws-cdk-project-stru
 
 I have also borrowed some project structure and management ideas directly from [aws-lambda-powertools](https://github.com/awslabs/aws-lambda-powertools-python) for python which is a great example of an Open Source repo for a python project!
 
-**NOTE:** The first time you execute a synth or deploy takes a long time. There is no output letting you know what is going on while the docker images are being downloaded to perform the initial packaging (See [Github Issue](https://github.com/aws/aws-cdk/issues/20390)) - once this is done synth and deploy are much faster!
+**NOTE:** The first time you execute a synth or deploy takes a long time. There is no output letting you know what is going on while the docker images are being downloaded to perform the initial packaging (See [Github Issue](https://github.com/aws/aws-cdk/issues/20390)) - once this is done synth and deploy are much faster, so do hang in there for the first synth/deploy.
 
 I have made the following changes/additions:
 
@@ -38,13 +41,13 @@ I have made the following changes/additions:
 
 ## Useful Conventions
 
-The following conventions are used in this project setup and must be adhered to for all the processes to work correctly.  The conventiosn are straight-forward and intended to add logical process over the projects.
+The following conventions are used in this project setup and must be adhered to for all the processes to work correctly.  The conventions are straight-forward and intended to add logical process over the projects.
 
 ### Project Folders
 
 #### cdk
 
-This folder is where common cdk modules should exist along with the CDK Stack to be deployed by the service.  The **stack.py** is the file to modify and include all your constructs
+This folder is where common cdk modules should exist along with the CDK Stack to be deployed by the service.  The **stack.py** is the file to modify and include all your constructs from the services folder.
 
 #### tests
 

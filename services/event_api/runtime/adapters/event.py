@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-from .adapters.file_storage import FileStorage
+from .file_storage import FileStorage
 
 
 class EventService:

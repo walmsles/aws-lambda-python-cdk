@@ -1,6 +1,6 @@
 import json
 
-from services.event_api.runtime.event import EventService
+from services.event_api.runtime.adapters.event import EventService
 from tests.unit.adapters.fake_storage import FakeStorage
 
 
