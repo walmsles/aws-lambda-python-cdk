@@ -1,6 +1,6 @@
 # Deploying Python code to AWS Lambda with CDK
 
-Deploying Python code to AWS Lambda using the AWS CDK is confusing especially when there are so many different methods being put forward as **Best Practice**.  I honestly feel right now the true AWS Serverless *Best Practice* is yet to fully emerge so tread carefully and make the right choice that works for your situation and meets your needs.  I have put this project example togethe rfor my own use and to use as a basis for Serverless teams that I assist and accelerate in my day to day work life.
+Deploying Python code to AWS Lambda using the AWS CDK is confusing especially when there are so many different methods being put forward as **Best Practice**.  I honestly feel right now the true AWS Serverless *Best Practice* is yet to fully emerge so tread carefully and make the right choice that works for your situation and meets your needs.  I have put this project example together for my own use and to use as a basis for Serverless teams that I assist and accelerate in my day to day work life.
 
 There are a few considerations when building out a sane project directory structure for a Serverless Service built around AWS Lambda packaged and deployed using the AWS CDK.
 
@@ -13,6 +13,11 @@ There are a few considerations when building out a sane project directory struct
 3. Lambda functions must only include the dependencies they directly use so that lambda function sizes are kept to a minimum to ease cold start time pressure.
 4. CDK infrastructure for Lambda service components must be co-located with the lambda function to ease refactoring and ensure related service elements are kept together in a single unit
 5. CDK Infrastructure for each service component must be implemented as a CDK Construct and not a stack.  This will enable faster refactoring and enable flexible stack creation and re-use in real cloud testing.
+
+
+## Hexagonal Architecture
+
+There has been a lot of talk about [Hexagonal Architectures](https://alistair.cockburn.us/hexagonal-architecture/) in the AWS Serverless wold this year and I have written some articles on this topic which you can find on [my blog](https://blog.walmsles.io).  In this repo I use the Dependency Inversion principle in building out Ports and Adapters to create loosely coupled classes for accesing AWS Cloud resources.  This helps in reducing the need for mocking AWS SDK calls in order to test the Microservice code you are writing which is often hard or problematic for developers new to AWS Serverless.
 
 ## Where to Start?
 
@@ -70,7 +75,7 @@ This folder is where each of your micro-service components is defined.  Each fol
     └── requirements.txt
 ```
 - **infrastructure.py** contains the CDK construct code for the service.  Thsi should always be a construct and not a stack since this enables a single stack to be created for a service which I feel is critical.  Thsi also enables a component to be split-out and re-used pretty quickly as you have built for this already.
-- **runtime** contains the actual Lambda code for the service (if Lamda is being used) and is the folder that the **PythonFunction** construct builds for you.
+- **runtime** contains the actual Lambda code for the service (if Lamda is being used) and is the folder that the **PythonFunction** construct packages for you.  teh benefit of using this alpha feature is proper Lambda packaging is done in a Lambda compatible environment according to your chosen Architecture.
 - **adapters** is used to house adapter implementation for the Service - we are using Hexagonal Achitecture here and ports and adapters are critical in enabling cloud isolation and simpler testing.
 - **adapters/ports** are the interfaces used by the adapter implementations.
 
