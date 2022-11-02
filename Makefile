@@ -59,7 +59,7 @@ deploy/diff: deps
 	poetry run cdk destroy
 
 .PHONY: deps
-deps: dev
+deps:
 	scripts/make-deps.sh
 
 .PHONY: clean
