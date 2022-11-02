@@ -20,7 +20,7 @@ There are a few considerations when building out a sane project directory struct
 
 There has been a lot of talk about [Hexagonal Architectures](https://alistair.cockburn.us/hexagonal-architecture/) in the AWS Serverless wold this year and I have written some articles on this topic which you can find on [my blog](https://blog.walmsles.io).  In this repo I use the Dependency Inversion principle in building out Ports and Adapters to create loosely coupled classes for accesing AWS Cloud resources.  This helps in reducing the need for mocking AWS SDK calls in order to test the Microservice code you are writing which is often hard or problematic for developers new to AWS Serverless.
 
-I am using this repo to also explore this concept within this repo and the ideas presented will change and grow as I mature my understanding through building.
+I am using this repo to also explore this concept and the ideas presented here will change as I mature my understanding through building and testing.
 
 ## Where to Start?
 
@@ -77,7 +77,7 @@ This folder is where each of your micro-service components is defined.  Each fol
     ├── event.py
     └── requirements.txt
 ```
-- **infrastructure.py** contains the CDK construct code for the service.  Thsi should always be a construct and not a stack since this enables a single stack to be created for a service which I feel is critical.  Thsi also enables a component to be split-out and re-used pretty quickly as you have built for this already.
+- **infrastructure.py** contains the CDK construct code for the service.  This should always be a construct and not a stack since this enables a single stack to be created for a service which I feel is critical.  Thsi also enables a component to be split-out and re-used pretty quickly as you have built for this already.
 - **runtime** contains the actual Lambda code for the service (if Lamda is being used) and is the folder that the **PythonFunction** construct packages for you.  teh benefit of using this alpha feature is proper Lambda packaging is done in a Lambda compatible environment according to your chosen Architecture.
 - **adapters** is used to house adapter implementation for the Service - we are using Hexagonal Achitecture here and ports and adapters are critical in enabling cloud isolation and simpler testing.
 - **adapters/ports** are the interfaces used by the adapter implementations.
