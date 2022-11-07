@@ -69,11 +69,6 @@ class EventFunctionConstruct(Construct):
             },
         )
 
-        # Bind to REST API V1
-        api = RestApi(self, "EventApi")
-        events = api.root.add_resource("events")
-        events.add_method("POST", LambdaIntegration(function, proxy=True))
-
         # Grant bucket read/write
         bucket.grant_read_write(function)
 

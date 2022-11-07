@@ -12,14 +12,14 @@ class EventApiIntegrationStack(BaseInfrastructure):
         #
         aws_logs.LogGroup(
             self.stack,
-            f"{event_function.function.function_name}-lg",
+            "EventAPIFunction-lg",
             log_group_name=f"/aws/lamdba/{event_function.function.function_name}",
             retention=aws_logs.RetentionDays.ONE_DAY,
             removal_policy=RemovalPolicy.DESTROY,
         )
 
         self.add_cfn_output(
-            name="FunctionEventApi",
+            name="EventApiFunction",
             value=event_function.function.function_name,
             arn=event_function.function.function_arn,
         )
