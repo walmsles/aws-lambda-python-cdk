@@ -27,6 +27,8 @@ mypy = "^0.982"
 mypy-boto3-s3 = "^1.26.0.post1"
 mypy-boto3 = "^1.26.0.post1"
 boto3-stubs = "^1.26.0.post1"
+pylint = "^2.15.5"
+mypy-boto3-cloudformation = "^1.26.0.post1"
 
 
 [tool.poetry.group.event_api.dependencies]

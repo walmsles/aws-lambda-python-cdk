@@ -55,7 +55,12 @@ deploy: deps
 deploy/diff: deps
 	poetry run cdk diff
 
+.PHONY: deploy/remove
+deploy/remove:
+	poetry run cdk destroy
+
 .PHONY: deploy/destroy
+deploy/destroy:
 	poetry run cdk destroy
 
 .PHONY: deps
@@ -64,9 +69,7 @@ deps:
 
 .PHONY: clean
 clean:
-	rm -rf cdk.out .vscode .pytest_cache .coverage coverage.xml
+	rm -rf cdk.out .vscode .pytest_cache .coverage coverage.xml .mypy_cache
 	find services -type f -name "requirements.txt" -delete
-	find services -type d -name "__pycache__" -delete
-	find cdk -type d -name "__pycache__" -delete
-	find tests -type d -name "__pycache__" -delete
+	find services cdk tests -type d -name "__pycache__" -exec rm -rf {} \;
 	poetry env remove --all

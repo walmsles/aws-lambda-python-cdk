@@ -11,14 +11,7 @@ from aws_cdk.aws_sqs import Queue
 from constructs import Construct
 
 
-class EventApiConstruct(Construct):
-    _stack_base_name = "event-api"
-
-    def get_stack_id(self, component_name: str) -> str:
-        name = f"{self._stack_base_name}-{component_name}"
-
-        return name
-
+class EventFunctionConstruct(Construct):
     def __init__(
         self,
         scope: "Construct",
@@ -52,12 +45,15 @@ class EventApiConstruct(Construct):
             # Create Event Store Bucket
             bucket = Bucket(
                 self,
-                self.get_stack_id("event-store"),
+                "EventStore",
                 encryption=BucketEncryption.KMS_MANAGED,
                 bucket_key_enabled=True,
                 block_public_access=BlockPublicAccess.BLOCK_ALL,
                 lifecycle_rules=life_cycles,
             )
+
+        runtime_path = str(Path(__file__).parent.joinpath("runtime").resolve())
+        print(f"Lambda path: {runtime_path}")
 
         function = PythonFunction(
             self,
@@ -74,7 +70,7 @@ class EventApiConstruct(Construct):
         )
 
         # Bind to REST API V1
-        api = RestApi(self, self.get_stack_id("event-api"))
+        api = RestApi(self, "EventApi")
         events = api.root.add_resource("events")
         events.add_method("POST", LambdaIntegration(function, proxy=True))
 
@@ -83,3 +79,39 @@ class EventApiConstruct(Construct):
 
         self.bucket = bucket
         self.queue = queue
+        self.function = function
+
+
+class EventApiConstruct(Construct):
+    def __init__(
+        self,
+        scope: "Construct",
+        id: builtins.str,
+        *,
+        bucket: Optional[Bucket] = None,
+        queue: Optional[Queue] = None,
+    ) -> None:
+        """
+        EventApiConstruct
+        -----------------
+        Component Construct for EventAPI inbound service responsible for validating the inbound event, storing in s3
+        and submitting meta-data into SNS for downstream processing.
+
+        Parameters
+        ----------
+        bucket : allow the bucket to be associated with the EVentAPI service to be injected,
+            if None is provided one will be created.
+        queue  : Allow the SQS Queue for use by EventApi Lambda to be injected, if None provided one will be created.
+        """
+        super().__init__(scope, id)
+
+        event_function: EventFunctionConstruct = EventFunctionConstruct(
+            self, "EventFunction", bucket=bucket, queue=queue
+        )
+
+        # Bind to REST API V1
+        api = RestApi(self, "EventApi")
+        events = api.root.add_resource("events")
+        events.add_method(
+            "POST", LambdaIntegration(event_function.function, proxy=True)
+        )
