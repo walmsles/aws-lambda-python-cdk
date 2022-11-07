@@ -108,4 +108,6 @@ Instead I use podman on my mac which can be used as a drop-in replacement to doc
 - [Podman](https://podman.io)
 - `scripts/docker` placed into your local env path
 
-The `docker` script pushes all commands staight through to podman and enables AWS CDK PythonFunction to do a full deployment.
+The `docker` script pushes all commands straight through to podman and enables AWS CDK PythonFunction to do a full deployment.
+
+**WARNING:** Using `podman` or any other open source "Docker compatible" project comes with risks that CDK packaging will fail when the docker image is updated.  For AWS CDK, Docker will always work, and I would recommend using Docker when you can for this reason.  When the docker image stopped working with podman I also tried `colima` and `minikube` which are also viable replacements but they all displayed similar behaviour.
