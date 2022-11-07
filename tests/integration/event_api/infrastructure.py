@@ -23,3 +23,8 @@ class EventApiIntegrationStack(BaseInfrastructure):
             value=event_function.function.function_name,
             arn=event_function.function.function_arn,
         )
+        self.add_cfn_output(
+            name="EventStoreBucket",
+            value=event_function.bucket.bucket_name,
+            arn=event_function.bucket.bucket_arn,
+        )

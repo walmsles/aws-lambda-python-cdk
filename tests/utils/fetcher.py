@@ -1,5 +1,7 @@
+import json
 from datetime import datetime
-from typing import Optional, Tuple
+from pathlib import Path
+from typing import Any, Optional, Tuple
 
 import boto3
 import requests as requests
@@ -10,7 +12,12 @@ from requests.exceptions import RequestException
 from retry import retry
 
 
-def get_lambda_response(
+def fetch_test_event(name: str) -> Any:
+    path = Path(__file__).parent.parent.joinpath("events").joinpath(name)
+    return json.loads(path.read_text())
+
+
+def fetch_lambda_response(
     lambda_arn: str,
     payload: Optional[str] = None,
     client: Optional[LambdaClient] = None,
