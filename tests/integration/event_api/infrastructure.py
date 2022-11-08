@@ -28,3 +28,7 @@ class EventApiIntegrationStack(BaseInfrastructure):
             value=event_function.bucket.bucket_name,
             arn=event_function.bucket.bucket_arn,
         )
+
+        self.add_cfn_output(
+            name="EventMessageQueueUrl", value=event_function.queue.queue_url
+        )

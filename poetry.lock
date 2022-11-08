@@ -726,6 +726,17 @@ python-versions = ">=3.7"
 typing-extensions = ">=4.1.0"
 
 [[package]]
+name = "mypy-boto3-sqs"
+version = "1.26.0.post1"
+description = "Type annotations for boto3.SQS 1.26.0 service generated with mypy-boto3-builder 7.11.10"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+typing-extensions = ">=4.1.0"
+
+[[package]]
 name = "mypy-extensions"
 version = "0.4.3"
 description = "Experimental type system extensions for programs checked with the mypy typechecker."
@@ -1016,7 +1027,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "821d8860d566ceb5b0046e4ff67549fba41d7d01ee334f3188ae491e090d07ae"
+content-hash = "9efc7633d1d0712b9caef9de466e747efa69fd24b454f0d327d8a36966bfe34d"
 
 [metadata.files]
 astroid = [
@@ -1256,6 +1267,10 @@ mypy-boto3-lambda = [
 mypy-boto3-s3 = [
     {file = "mypy-boto3-s3-1.26.0.post1.tar.gz", hash = "sha256:6d7079f8c739dc993cbedad0736299c413b297814b73795a3855a79169ecc938"},
     {file = "mypy_boto3_s3-1.26.0.post1-py3-none-any.whl", hash = "sha256:7de2792ff0cc541b84cd46ff3a6aa2b6e5f267217f2203f27f6e4016bddc644d"},
+]
+mypy-boto3-sqs = [
+    {file = "mypy-boto3-sqs-1.26.0.post1.tar.gz", hash = "sha256:6caead4c906ac4956eebdfeeaa1e08f9df03929a0cefac06122ca88bd7766610"},
+    {file = "mypy_boto3_sqs-1.26.0.post1-py3-none-any.whl", hash = "sha256:72e5dcb12731d83f235f9cf282bf8d87d6757b5e0fda1068726772806ca6f0cc"},
 ]
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},

@@ -1,9 +1,9 @@
 import json
 
-from services.event_api.runtime.adapters.ports.file_port import FileStorageProvider
+from services.event_api.runtime.adapters.ports.file_port import FileStoragePort
 
 
-class FakeStorage(FileStorageProvider):
+class FakeStorage(FileStoragePort):
     def __init__(self):
         super().__init__()
         self.read_filename = None
