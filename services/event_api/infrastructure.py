@@ -40,9 +40,6 @@ class EventFunctionConstruct(Construct):
         self._create_bucket()
         self._create_queue()
 
-        runtime_path = str(Path(__file__).parent.joinpath("runtime").resolve())
-        print(f"Lambda path: {runtime_path}")
-
         self.function = PythonFunction(
             self,
             "LambdaFunction",
@@ -54,6 +51,7 @@ class EventFunctionConstruct(Construct):
             tracing=Tracing.ACTIVE,
             environment={
                 "EVENT_BUCKET": self.bucket.bucket_name,
+                "EVENT_QUEUE": self.queue.queue_url,
             },
         )
 

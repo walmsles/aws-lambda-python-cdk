@@ -11,14 +11,14 @@ if TYPE_CHECKING:
 
 class MessageProvider(MessagePort):
     def __init__(self, resource_id: str):
-        super().__init(resource_id)
+        super().__init__(resource_id)
 
         self._client: "SQSClient" = boto3.client("sqs")
 
     def send_event(
         self, message_id: str, body: Dict[str, Any], group_id: Optional[str] = None
     ):
-
+        self.group_id = group_id
         message_body = {"message_id": message_id, "body": body}
 
         # Submit Message to SQS Queue

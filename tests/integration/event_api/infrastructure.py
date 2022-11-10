@@ -3,6 +3,11 @@ from aws_cdk import RemovalPolicy, aws_logs
 from services.event_api.infrastructure import EventFunctionConstruct
 from tests.utils.base_infrastructure import BaseInfrastructure
 
+EVENT_API_FUNCTION = "EventApiFunction"
+EVENT_API_FUNCTION_ARN = "EventApiFunctionArn"
+EVENT_STORE_BUCKET = "EventStoreBucket"
+EVENT_MESSAGE_QUEUE = "EventMessageQueueUrl"
+
 
 class EventApiIntegrationStack(BaseInfrastructure):
     def create_resources(self):
@@ -19,16 +24,16 @@ class EventApiIntegrationStack(BaseInfrastructure):
         )
 
         self.add_cfn_output(
-            name="EventApiFunction",
+            name=EVENT_API_FUNCTION,
             value=event_function.function.function_name,
             arn=event_function.function.function_arn,
         )
         self.add_cfn_output(
-            name="EventStoreBucket",
+            name=EVENT_STORE_BUCKET,
             value=event_function.bucket.bucket_name,
             arn=event_function.bucket.bucket_arn,
         )
 
         self.add_cfn_output(
-            name="EventMessageQueueUrl", value=event_function.queue.queue_url
+            name=EVENT_MESSAGE_QUEUE, value=event_function.queue.queue_url
         )
