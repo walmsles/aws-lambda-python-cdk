@@ -1,10 +1,13 @@
 import builtins
 import typing
+from pathlib import Path
 
 from aws_cdk import Environment, IStackSynthesizer, Stack
 from constructs import Construct
 
 from services.event_api.infrastructure import EventApiConstruct
+
+CDK_PACKAGE_PATH = Path(__file__).parent
 
 
 class AppStack(Stack):

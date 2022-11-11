@@ -1,7 +1,8 @@
 import json
 
-from services.event_api.runtime.adapters.event import EventService
-from tests.unit.adapters.fake_storage import FakeStorage
+from services.event_api.runtime.adapters.service import EventService
+from tests.unit.adapters.file_port import FakeStorage
+from tests.unit.adapters.message_port import FakeMessagePort
 
 
 def test_service_process_event():
@@ -9,8 +10,10 @@ def test_service_process_event():
     transaction_id = "xxx-111"
     event_detail = {"event": "test-event", "data": {"key1": "value1"}}
     fake_storage = FakeStorage()
-
-    event_service = EventService(file_storage=fake_storage)
+    fake_message = FakeMessagePort(resource_id="sqs_queue")
+    event_service = EventService(
+        file_storage=fake_storage, message_provider=fake_message
+    )
 
     # When
     result = event_service.process_event(
@@ -19,7 +22,9 @@ def test_service_process_event():
 
     # Then
     assert result is True
-    assert fake_storage.save_filename == "xxx-111.json"
+    assert fake_storage.save_filename == f"{transaction_id}.json"
     assert fake_storage.save_content == json.dumps(
         {"event": "test-event", "data": {"key1": "value1"}}
     )
+    assert fake_message.message_id == transaction_id
+    assert fake_message.body == event_detail

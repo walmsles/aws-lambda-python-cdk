@@ -4,13 +4,13 @@ from typing import TYPE_CHECKING, Any, Dict
 
 import boto3
 
-from .ports.file_port import FileStorageProvider
+from .ports.file_port import FileStoragePort
 
 if TYPE_CHECKING:
     from mypy_boto3_s3 import S3Client
 
 
-class FileStorage(FileStorageProvider):
+class FileStorage(FileStoragePort):
     def __init__(self):
         super().__init__()
 

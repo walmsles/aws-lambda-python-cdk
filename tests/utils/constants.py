@@ -1,0 +1,4 @@
+from cdk.stack import CDK_PACKAGE_PATH
+
+SOURCE_CODE_ROOT_PATH = CDK_PACKAGE_PATH.parent
+CDK_OUT_PATH = SOURCE_CODE_ROOT_PATH / "cdk.out"

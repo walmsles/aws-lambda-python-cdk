@@ -6,7 +6,7 @@ service_src = services
 tests_src = tests
 
 e2e_tests = $(tests_src)/e2e
-int_tests = $(test_src)/integration
+int_tests = $(tests_src)/integration
 all_src = $(cdk_src) $(service_src) $(tests_src)
 
 .PHONY: target
@@ -22,6 +22,14 @@ dev:
 .PHONY: test
 test:
 	poetry run pytest --ignore $(e2e_tests) --ignore $(int_tests) --cov=$(project) --cov-report=xml --cov-report term
+
+.PHONY: test/integration
+test/integration: test
+	poetry run pytest $(int_tests) --cov=$(project) --cov-report=xml --cov-report term
+
+.PHONY: test/e2e
+test/e2e: test
+	poetry run pytest $(e2e_tests) --cov=$(project) --cov-report=xml --cov-report term
 
 .PHONY: format
 format:
@@ -55,7 +63,12 @@ deploy: deps
 deploy/diff: deps
 	poetry run cdk diff
 
+.PHONY: deploy/remove
+deploy/remove:
+	poetry run cdk destroy
+
 .PHONY: deploy/destroy
+deploy/destroy:
 	poetry run cdk destroy
 
 .PHONY: deps
@@ -64,9 +77,7 @@ deps:
 
 .PHONY: clean
 clean:
-	rm -rf cdk.out .vscode .pytest_cache .coverage coverage.xml
+	rm -rf cdk.out .vscode .pytest_cache .coverage coverage.xml .mypy_cache
 	find services -type f -name "requirements.txt" -delete
-	find services -type d -name "__pycache__" -delete
-	find cdk -type d -name "__pycache__" -delete
-	find tests -type d -name "__pycache__" -delete
+	find services cdk tests -type d -name "__pycache__" -exec rm -rf {} \;
 	poetry env remove --all
