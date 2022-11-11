@@ -5,7 +5,7 @@ from tests.unit.adapters.file_port import FakeStorage
 from tests.unit.adapters.message_port import FakeMessagePort
 
 
-def test_service_process_event():
+def test_event_service():
     # Given
     transaction_id = "xxx-111"
     event_detail = {"event": "test-event", "data": {"key1": "value1"}}
