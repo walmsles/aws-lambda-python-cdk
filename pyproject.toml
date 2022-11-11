@@ -41,6 +41,11 @@ aws-lambda-powertools = "^2.0.0"
 
 [tool.poetry.group.router.dependencies]
 
+
+[tool.poetry.group.event_processor.dependencies]
+aws-lambda-powertools = "^2.2.0"
+mypy-boto3-dynamodb = "^1.26.0.post1"
+
 [tool.isort]
 profile = "black"
 

@@ -397,6 +397,7 @@ sagemaker-edge = ["mypy-boto3-sagemaker-edge (>=1.26.0,<1.27.0)"]
 sagemaker-featurestore-runtime = ["mypy-boto3-sagemaker-featurestore-runtime (>=1.26.0,<1.27.0)"]
 sagemaker-runtime = ["mypy-boto3-sagemaker-runtime (>=1.26.0,<1.27.0)"]
 savingsplans = ["mypy-boto3-savingsplans (>=1.26.0,<1.27.0)"]
+scheduler = ["mypy-boto3-scheduler (>=1.26.0,<1.27.0)"]
 schemas = ["mypy-boto3-schemas (>=1.26.0,<1.27.0)"]
 sdb = ["mypy-boto3-sdb (>=1.26.0,<1.27.0)"]
 secretsmanager = ["mypy-boto3-secretsmanager (>=1.26.0,<1.27.0)"]
@@ -535,7 +536,7 @@ optional = false
 python-versions = "~=3.7"
 
 [package.dependencies]
-jsii = ">=1.70.0,<2.0.0"
+jsii = ">=1.71.0,<2.0.0"
 publication = ">=0.0.3"
 typeguard = ">=2.13.3,<2.14.0"
 
@@ -636,7 +637,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "jsii"
-version = "1.70.0"
+version = "1.71.0"
 description = "Python client for jsii runtime"
 category = "dev"
 optional = false
@@ -1042,7 +1043,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "67362d69c5ef043b4c181b83d21ddaaa6463f5dba6536a6b0b9607ab594b88b7"
+content-hash = "aad080e8c390221e19f8b21bafba317e34da39fe07748717525e1ee96dbafa54"
 
 [metadata.files]
 astroid = [
@@ -1213,8 +1214,8 @@ jmespath = [
     {file = "jmespath-1.0.1.tar.gz", hash = "sha256:90261b206d6defd58fdd5e85f478bf633a2901798906be2ad389150c5c60edbe"},
 ]
 jsii = [
-    {file = "jsii-1.70.0-py3-none-any.whl", hash = "sha256:d0867c0d2f60ceda1664c026033ae34ea36178c7027315e577ded13043827664"},
-    {file = "jsii-1.70.0.tar.gz", hash = "sha256:9fc57ff37868364ba3417b26dc97189cd0cc71282196a3f4765768c067354be0"},
+    {file = "jsii-1.71.0-py3-none-any.whl", hash = "sha256:0f081498d9f2a12850577caedebe604e4b6e98e7fb20c3bbcca05a5ab8bd0f0b"},
+    {file = "jsii-1.71.0.tar.gz", hash = "sha256:e8fedaf077c192917f1d43100b2bbb5d107e4393b713f8ca2814d7653d64a026"},
 ]
 lazy-object-proxy = [
     {file = "lazy-object-proxy-1.8.0.tar.gz", hash = "sha256:c219a00245af0f6fa4e95901ed28044544f50152840c5b6a3e7b2568db34d156"},
