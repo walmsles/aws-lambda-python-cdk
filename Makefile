@@ -19,16 +19,16 @@ dev:
 	poetry install
 	pre-commit install
 
-.PHONY: test
-test:
+.PHONY: tests
+tests:
 	poetry run pytest --ignore $(e2e_tests) --ignore $(int_tests) --cov=$(project) --cov-report=xml --cov-report term
 
-.PHONY: test/integration
-test/integration: test
+.PHONY: tests/integration
+tests/integration: tests deps
 	poetry run pytest $(int_tests) --cov=$(project) --cov-report=xml --cov-report term
 
-.PHONY: test/e2e
-test/e2e: test
+.PHONY: tests/e2e
+tests/e2e: tests/integration deps
 	poetry run pytest $(e2e_tests) --cov=$(project) --cov-report=xml --cov-report term
 
 .PHONY: format
@@ -46,10 +46,6 @@ pre-commit:
 
 .PHONY: pr
 pr: lint mypy pre-commit test
-
-.PHONY: mypy
-mypy:
-	poetry run mypy --pretty $(service_src) $(cdk_src)
 
 .PHONY: synth
 synth: deps
