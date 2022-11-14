@@ -2,7 +2,7 @@
 
 Deploying Python code to AWS Lambda using the AWS CDK is confusing especially when there are so many different methods and options available.  I honestly feel right now the true AWS Serverless *Best Practice* is yet to fully emerge so I tend to tread carefully and make the choices that work for my teams and projects.  I also tend to move slowly with adopting the next BIG thing and make sure I play with and understand the choices I am making.  So I have put this project example together for my own use and to use as a basis for Serverless teams that I assist and accelerate in my day to day work life, it has the things that I like and prefer to use and understand.
 
-There are a few considerations when building out a sane project directory structure for a Serverless Service built around AWS Lambda packaged and deployed using the AWS CDK.
+There are a few considerations when building out a project directory structure for a Serverless Service built around AWS Lambda packaged and deployed using the AWS CDK.
 
 **Important Note:** This repo is a work in progress and under constant churn right now as I work to complete a full end to end solution of dev, package, test and deploy.
 
@@ -18,7 +18,11 @@ There are a few considerations when building out a sane project directory struct
 
 ## Hexagonal Architecture
 
-There has been a lot of talk about [Hexagonal Architectures](https://alistair.cockburn.us/hexagonal-architecture/) in the AWS Serverless wold this year and I have written some articles on this topic which you can find on [my blog](https://blog.walmsles.io).  In this repo I use the Dependency Inversion principle in building out Ports and Adapters to create loosely coupled classes for accesing AWS Cloud resources.  This helps in reducing the need for mocking AWS SDK calls in order to test the Microservice code you are writing which is often hard or problematic for developers new to AWS Serverless.
+There has been a lot of talk about [Hexagonal Architectures](https://alistair.cockburn.us/hexagonal-architecture/) in the AWS Serverless wold this year and I have written some articles on this topic which you can find on [my blog](https://blog.walmsles.io).  In this repo I use the Dependency Inversion principle in building out Ports and Adapters to create loosely coupled classes for accesing AWS Cloud resources.  This helps in reducing the need for mocking AWS SDK calls in order to test the Microservice code you are writing which is often hard or problematic for developers new to AWS Serverless.  You can eliminate the need for MOCKING AWS SDK calls through using a "Ports" and "Adapters" implementation - you still need mocks (of fakes) for each of your adapters - but you won't need any mocking libraries or need to worry about how your code calls the SDK - not for unit tests anyway! This will enable you and your team to move faster - I find developers new to serverless really struggle with "mocking" the AWS SDK.
+
+Hold on!  If you don't mock AWS SDK calls - how am I going to test that writing a file to S3 works?  Well - we do that here in Integration tests which push up cloud infrastructure and trigger your Lambda directly with fixtures representing the integration event which triggers them - in this way you are testing how the real adapters call the AWS SDK by validating the outcome with real instances of the services - no need to mock when you are in the cloud.
+
+I love zero AWS SDB mocking!  It makes more sense to developers and everyone is happier!
 
 I am using this repo to also explore this concept and the ideas presented here will change as I mature my understanding through building and testing.
 
