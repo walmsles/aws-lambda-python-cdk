@@ -119,13 +119,13 @@ class EventApiConstruct(Construct):
         """
         super().__init__(scope, id)
 
-        event_function: EventFunctionConstruct = EventFunctionConstruct(
+        self.event_api: EventFunctionConstruct = EventFunctionConstruct(
             self, "EventFunction", bucket=bucket, queue=queue
         )
 
         # Bind to REST API V1
-        api = RestApi(self, "EventApi")
-        events = api.root.add_resource("events")
+        self.api = RestApi(self, "EventApi")
+        events = self.api.root.add_resource("events")
         events.add_method(
-            "POST", LambdaIntegration(event_function.function, proxy=True)
+            "POST", LambdaIntegration(self.event_api.function, proxy=True)
         )

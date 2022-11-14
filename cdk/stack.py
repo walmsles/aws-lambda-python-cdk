@@ -6,6 +6,7 @@ from aws_cdk import Environment, IStackSynthesizer, Stack
 from constructs import Construct
 
 from services.event_api.infrastructure import EventApiConstruct
+from services.event_processor.infrastructure import EventProcessorConstruct
 
 CDK_PACKAGE_PATH = Path(__file__).parent
 
@@ -38,4 +39,7 @@ class AppStack(Stack):
             termination_protection=termination_protection,
         )
 
-        EventApiConstruct(self, "EventApi")
+        event_construct = EventApiConstruct(self, "EventApi")
+        EventProcessorConstruct(
+            self, "EventProcessor", queue=event_construct.event_api.queue
+        )

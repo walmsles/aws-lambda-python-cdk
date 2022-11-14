@@ -28,7 +28,7 @@ tests/integration: tests deps
 	poetry run pytest $(int_tests) --cov=$(project) --cov-report=xml --cov-report term
 
 .PHONY: tests/e2e
-tests/e2e: tests/integration deps
+tests/e2e: tests deps
 	poetry run pytest $(e2e_tests) --cov=$(project) --cov-report=xml --cov-report term
 
 .PHONY: format

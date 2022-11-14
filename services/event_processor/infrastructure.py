@@ -3,6 +3,7 @@ from pathlib import Path
 
 from aws_cdk.aws_dynamodb import Attribute, AttributeType, Table, TableEncryption
 from aws_cdk.aws_lambda import Architecture, Runtime, Tracing
+from aws_cdk.aws_lambda_event_sources import SqsEventSource
 from aws_cdk.aws_lambda_python_alpha import PythonFunction
 from aws_cdk.aws_sqs import Queue
 from constructs import Construct
@@ -48,5 +49,10 @@ class EventProcessorConstruct(Construct):
                 "EVENT_STORE": self.table.table_name,
             },
         )
-
+        self.function.add_event_source(
+            SqsEventSource(
+                queue,
+                batch_size=10,
+            )
+        )
         self.table.grant_write_data(self.function)
