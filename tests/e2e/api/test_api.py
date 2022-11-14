@@ -26,7 +26,9 @@ def test_event_api(event_api_url):
             json={"body": api_data},
         )
     )
-    print(response)
+    api_response: Dict = response.json()
+
     # Then
-    # ** we should read the actual data injected by the API from S3.
+    # ** we should get a 200 status code and "transaction_id" will be returned in the API response.
     assert response.status_code == status_code
+    assert api_response.get("transaction_id", "Not Found") != "Not Found"
